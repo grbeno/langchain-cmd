@@ -1,4 +1,3 @@
-## https://smith.langchain.com/
 
 # default
 $ python chat.py -> python chat.py --model gpt-4o --provider openai
@@ -8,3 +7,10 @@ $ python chat.py --model gpt-3.5-turbo
 
 # both model and provider are needed, if not gpt
 $ python chat.py --model meta-llama/Meta-Llama-3-8B-Instruct --provider huggingface
+
+# env variables
+# generate keys using your account
+OPENAI_API_KEY, HUGGINGFACE_API_KEY
+# langchain/langsmith
+LANGCHAIN_API_KEY, HUGGINGFACE_API_KEY
+## https://smith.langchain.com/

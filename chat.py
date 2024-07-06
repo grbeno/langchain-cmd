@@ -11,13 +11,6 @@ from llms import Llms
 # Load environment variables from .env file
 load_dotenv()
 
-# default
-## python chat.py -> python chat.py --model gpt-4o --provider openai
-# default provider is openai, if gpt
-## python chat.py --model gpt-3.5-turbo
-# both model and provider are needed, if not gpt
-## python chat.py --model meta-llama/Meta-Llama-3-8B-Instruct --provider huggingface
-
 parser = argparse.ArgumentParser(description="Script to process model and provider")
 
 ##  model

@@ -1,5 +1,9 @@
 ### LLM based AI-chat testing with Langchain on CLI
 
+1. Use CLI
+2. Set virtual environment ( venv, pipenv ... )
+3. Install `requirements.txt`
+---
 Default model `gpt-4o` from OpenAI.
 ```
 python chat.py

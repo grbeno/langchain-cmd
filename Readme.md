@@ -17,7 +17,7 @@ You can select open source models from HuggingFace: `Meta-Llama-3` for example.
 python chat.py --model meta-llama/Meta-Llama-3-8B-Instruct
 ```
 ```
-.env
+#.env
 
 OPENAI_API_KEY
 HUGGINGFACE_API_KEY

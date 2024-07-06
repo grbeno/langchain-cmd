@@ -1,7 +1,5 @@
-import sys
 import argparse
 
-from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.chat_history import BaseChatMessageHistory
@@ -21,19 +19,6 @@ load_dotenv()
 ## python chat.py --model meta-llama/Meta-Llama-3-8B-Instruct --provider huggingface
 
 parser = argparse.ArgumentParser(description="Script to process model and provider")
-    
-# Add required 'model' argument
-parser.add_argument("--model", default="gpt-4o", help="The model to use (required)")
-
-# Add optional 'provider' argument
-parser.add_argument("--provider", default="openai", help="The provider to use (optional)")
-
-# Parse arguments
-args = parser.parse_args()
-
-if not 'gpt' in args.model and args.provider == 'openai':
-    print("Error: Provider is required when model is not 'gpt'")
-    sys.exit(1)
 
 ##  model
 ## 'gpt-4o'
@@ -43,14 +28,21 @@ if not 'gpt' in args.model and args.provider == 'openai':
 ## 'claude-3-5-sonnet-20240620'  # not yet available
 ## 'meta-llama/Meta-Llama-3-8B-Instruct'
 
+# Add optional 'model' argument
+parser.add_argument("--model", default="gpt-4o", help="The model to use (required)")
+
 ## provider
 ## 'openai'
 ## 'huggingface'
 
-model = args.model
-provider = args.provider
+# Add optional 'provider' argument
+# parser.add_argument("--provider", default="openai", help="The provider to use (optional)")
 
-llm = Llms(model, provider)
+# Parse arguments
+args = parser.parse_args()
+model = args.model
+
+llm = Llms(model)
 model = llm.get_model()
 selected_model = getattr(llm, 'model')
 print(f"Model: {selected_model}")

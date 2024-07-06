@@ -5,13 +5,13 @@ from langchain_huggingface import HuggingFaceEndpoint
 
 
 class Llms():
+    """Selects the model from OpenAI or Hugging Face."""
     
-    def __init__(self, model: str, provider: str) -> None:
+    def __init__(self, model: str) -> None:
         self.model = model
-        self.provider = provider  # openai, huggingface
 
-    
     def __select_gpt(self) -> callable:
+        """Selects the model from OpenAI."""
         return ChatOpenAI(
             api_key=os.environ.get("OPENAI_API_KEY"),
             model=self.model,
@@ -20,6 +20,7 @@ class Llms():
         )
         
     def __select_hf_opensource(self) -> callable:
+        """Selects the model from the Hugging Face model hub."""
         return HuggingFaceEndpoint(
             repo_id=self.model,
             task="text-generation",
@@ -29,10 +30,9 @@ class Llms():
         )
         
     def get_model(self):
-        if self.provider == 'openai':
+        """Selects the model."""
+        if 'gpt' in self.model:
             return self.__select_gpt()
-        elif self.provider == 'huggingface':
-            return self.__select_hf_opensource()
         else:
-            raise ValueError('Invalid provider')
+            return self.__select_hf_opensource()
     

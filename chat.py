@@ -52,6 +52,7 @@ with_message_history = RunnableWithMessageHistory(
 )
 
 # Chat on the command line
+print("\nAI: I am your assistant. Ask me anything or chat with me.")
 while True:
     if prompt := input("User: "):
         config = {"configurable": {"session_id": "chat"}}
@@ -70,7 +71,7 @@ while True:
             dir = 'conversations'
             if not os.path.exists(dir):
                 os.makedirs(dir)
-            filename = input("Enter the filename (without extension): ")
+            filename = input("Enter a valid filename (without extension): ")
             with open(f"{dir}/{filename}.txt", 'w') as f:
                 f.write(f"Model: {selected_model}\n\n")
                 for i, message in enumerate(store['chat'].messages):

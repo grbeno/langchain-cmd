@@ -2,9 +2,9 @@
 
 1. Use CLI
 2. Set virtual environment ( venv, pipenv ... )
-3. Install `requirements.txt`
+3. `pip install -r requirements.txt`
 ---
-Default model `gpt-4o` from OpenAI.
+Default model `gpt-4o-mini` from OpenAI.
 ```
 python chat.py
 ```

@@ -1,3 +1,4 @@
+import os
 import argparse
 
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
@@ -13,23 +14,8 @@ load_dotenv()
 
 parser = argparse.ArgumentParser(description="Script to process model and provider")
 
-##  model
-## 'gpt-4o'
-## 'gpt-4'
-## 'gpt-4-turbo'
-## 'gpt-3.5-turbo'
-## 'claude-3-5-sonnet-20240620'  # not yet available
-## 'meta-llama/Meta-Llama-3-8B-Instruct'
-
 # Add optional 'model' argument
-parser.add_argument("--model", default="gpt-4o", help="The model to use (required)")
-
-## provider
-## 'openai'
-## 'huggingface'
-
-# Add optional 'provider' argument
-# parser.add_argument("--provider", default="openai", help="The provider to use (optional)")
+parser.add_argument("--model", default="gpt-4o-mini", help="The model to use (required)")
 
 # Parse arguments
 args = parser.parse_args()
@@ -40,7 +26,8 @@ model = llm.get_model()
 selected_model = getattr(llm, 'model')
 print(f"Model: {selected_model}")
 
-system_prompt = "You are helpful, creative, clever, and very friendly assistant."  # Change this role to whatever you want
+system_prompt = """ You are helpful, creative, clever, and very friendly assistant. 
+Your response should be short but concise, no more than 5 sentences. """  # Change this role to whatever you want
 
 prompt = ChatPromptTemplate.from_messages([
     ("system", system_prompt),
@@ -51,13 +38,12 @@ prompt = ChatPromptTemplate.from_messages([
 chain = prompt | model
 
 store = {}
-
 def get_session_history(session_id: str) -> BaseChatMessageHistory:
     if session_id not in store:
         store[session_id] = ChatMessageHistory()
     return store[session_id]
 
-
+# Create a runnable that keeps track of the message history
 with_message_history = RunnableWithMessageHistory(
     chain,
     get_session_history,
@@ -67,14 +53,28 @@ with_message_history = RunnableWithMessageHistory(
 
 # Chat on the command line
 while True:
-    if prompt := input("Prompt: "):
-        config = {"configurable": {"session_id": "any"}}
+    if prompt := input("User: "):
+        config = {"configurable": {"session_id": "chat"}}
         response = with_message_history.invoke(
             {"input": prompt},
             config=config,
         )
         if 'gpt' in selected_model:
             response = response.content
-        print(response)
+        print(f"AI: {response}")
     else:
+        # Ask a question to save or not to text file, if yes then save the conversation to a text file
+        save = input("Do you want to save the conversation to a text file? (y/n): ")
+        if save.lower() == 'y':
+            # Make directory if not exists
+            dir = 'conversations'
+            if not os.path.exists(dir):
+                os.makedirs(dir)
+            filename = input("Enter the filename (without extension): ")
+            with open(f"{dir}/{filename}.txt", 'w') as f:
+                f.write(f"Model: {selected_model}\n\n")
+                for i, message in enumerate(store['chat'].messages):
+                    role = "User" if i % 2 == 0 else "AI"
+                    f.write(f"{role}: {message.content}\n")
+            print("Conversation saved to text file.")
         break  # Exit the loop if the user enters an empty prompt

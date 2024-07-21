@@ -1,2 +1,0 @@
-# Add optional 'provider' argument
-# parser.add_argument("--provider", default="openai", help="The provider to use (optional)")

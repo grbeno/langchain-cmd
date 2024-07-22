@@ -5,6 +5,7 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
+from langchain_core.messages import AIMessage
 
 from dotenv import load_dotenv
 from llms import Llms
@@ -75,7 +76,10 @@ while True:
             with open(f"{dir}/{filename}.txt", 'w') as f:
                 f.write(f"Model: {selected_model}\n\n")
                 for i, message in enumerate(store['chat'].messages):
-                    role = "User" if i % 2 == 0 else "AI"
-                    f.write(f"{role}: {message.content}\n")
+                    if isinstance(message, AIMessage):
+                        prefix = "AI"
+                    else:
+                        prefix = "User"
+                    f.write(f"{prefix}: {message.content}\n")
             print("Conversation saved to text file.")
         break  # Exit the loop if the user enters an empty prompt

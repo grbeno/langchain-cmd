@@ -1,8 +1,19 @@
 ### LLM based AI-chat testing with Langchain on CLI
 
-1. Use CLI
-2. Set virtual environment ( venv, pipenv ... )
-3. `pip install -r requirements.txt`
+__requirement: python__\
+Set virtual environment in the selected project directory
+```
+python -m venv .venv
+```
+```
+.venv/Scripts/activate  # windows
+```
+```
+source venv/bin/activate  # linux or mac
+``` 
+```
+pip install -r requirements.txt
+```
 ---
 Default model `gpt-4o-mini` from OpenAI.
 ```

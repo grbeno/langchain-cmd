@@ -4,6 +4,7 @@
 # Custom prompts that can be used in the chat
 custom_prompts = { 
     "Short and concise" : "Your response should be short but concise, no more than 3 sentences.",
+    "Correct english" : "Your response should be the correction of the given prompt. If the prompt is already correct, respond with 'Your english is correct'.",
     "Generate a filename" : "Generate a short filename about the prompt, without any extension. The filename should be less than 20 characters. Your response have to be only the filename itself.",
     
     }

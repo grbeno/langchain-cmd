@@ -24,19 +24,22 @@ load_dotenv()
 parser = argparse.ArgumentParser(description="Script to process model and provider")
 
 # Add optional 'model' argument
-parser.add_argument("--model", default="gpt-4o-mini", help="The model to use (required)")
+parser.add_argument("--model", default="gpt-4o-mini", help="The model to use (optional)")
+parser.add_argument("--mode", default="Short and concise", help="The mode to response to the prompt (optional)")
 
 # Parse arguments
 args = parser.parse_args()
 model = args.model
+response_mode = args.mode
 
 llm = Llms(model)
 model = llm.get_model()
 selected_model = getattr(llm, 'model')
-print(f"Model: {selected_model}")
+print(f"{Fore.LIGHTBLUE_EX}{Style.NORMAL}Model: {selected_model}")
+print(f"{Fore.LIGHTBLUE_EX}{Style.NORMAL}Response mode: {response_mode}")
 
 system_prompt = f""" You are helpful, creative, clever, and very friendly assistant. 
-{custom_prompts["Short and concise"]} """  # Change this role to whatever you want
+{custom_prompts[response_mode]} """  # Change this role to whatever you want
 
 prompt = ChatPromptTemplate.from_messages([
     ("system", system_prompt),
@@ -64,7 +67,7 @@ with_message_history = RunnableWithMessageHistory(
 # Chat on the command line
 async def chat_loop():
     
-    print("\nI am your assistant. Ask me anything or chat with me.")
+    print(f"{Style.RESET_ALL}\nI am your assistant. Ask me anything or chat with me.")
     
     while True:
         

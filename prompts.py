@@ -7,4 +7,4 @@ custom_prompts = {
     "Correct english" : "Your response should be the correction of the given prompt. If the prompt is already correct, respond with 'Your english is correct'.",
     "Generate a filename" : "Generate a short filename about the prompt, without any extension. The filename should be less than 20 characters. Your response have to be only the filename itself.",
     
-    }
+}

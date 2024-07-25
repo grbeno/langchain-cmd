@@ -13,6 +13,7 @@ from dotenv import load_dotenv
 from colorama import init, Fore, Style
 
 from llms import Llms, ChatContext
+from prompts import custom_prompts
 
 # Initialize colorama
 init()
@@ -34,8 +35,8 @@ model = llm.get_model()
 selected_model = getattr(llm, 'model')
 print(f"Model: {selected_model}")
 
-system_prompt = """ You are helpful, creative, clever, and very friendly assistant. 
-Your response should be short but concise, no more than 3 sentences. """  # Change this role to whatever you want
+system_prompt = f""" You are helpful, creative, clever, and very friendly assistant. 
+{custom_prompts["Short and concise"]} """  # Change this role to whatever you want
 
 prompt = ChatPromptTemplate.from_messages([
     ("system", system_prompt),

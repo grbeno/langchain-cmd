@@ -5,6 +5,8 @@ from langchain_openai import ChatOpenAI
 from langchain_huggingface import HuggingFaceEndpoint
 from langchain_core.messages import AIMessage
 
+from prompts import custom_prompts
+
 
 class Llms():
     """Selects the model from OpenAI or Hugging Face."""
@@ -56,7 +58,7 @@ class ChatContext(Llms):
         create_title = [
             (
                 "system",
-                "Generate short filename about the prompt, without any extension. The filename should be less than 20 characters. Your response have to be only the filename itself.",
+                custom_prompts["Generate a filename"],
             ),
             ("human", self.get_content()),  # should not be list!
         ]

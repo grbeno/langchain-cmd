@@ -1,24 +1,64 @@
-
+---
+# Links
+## https://python.org/downloads/
+## https://python.langchain.com/v0.2/docs/introduction/
 ## https://smith.langchain.com/
+## https://huggingface.co/
+## https://platform.openai.com/api-keys
 
-#  Tried models you can select
+---
+#  Tried models, looks good
+#  python chat.py --model <model>
 ## 'gpt-4o-mini'
 ## 'gpt-4o'
 ## 'gpt-4'
 ## 'gpt-4-turbo'
 ## 'gpt-3.5-turbo'
+
+# Planned models
 ## 'claude-3-5-sonnet-20240620'  # not yet available
+
+# Tried, but not works properly
+## 'mistralai/Mistral-Nemo-Instruct-2407'
 ## 'meta-llama/Meta-Llama-3-8B-Instruct'
 
+---
 # Providers
 ## 'openai'
 ## 'huggingface'
 
+---
 # .env
+
 ## OPENAI_API_KEY
 ## HUGGINGFACE_API_KEY
+
 # langchain/langsmith
+
 ## LANGCHAIN_API_KEY
 ## HUGGINGFACE_API_KEY
 
+---
+# Use
 
+# Setup
+## Select directory (cd) and create .env file
+## python -m venv .venv
+## .venv/Scripts/activate  # Windows
+## source .venv/bin/activate  # Linux
+## pip install -r requirements.txt
+
+# Run
+## python chat.py
+## python chat.py --model <model>
+
+# Open saved conversation
+
+## cd conversation
+## cat <anyfile.txt>
+
+# Exit
+## empty row
+
+# Close venv
+## deactivate

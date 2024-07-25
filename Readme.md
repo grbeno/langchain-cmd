@@ -1,7 +1,7 @@
-### LLM based AI-chat testing with Langchain on CLI
+### 🌱 LLM based AI-chat testing with Langchain on CLI
 
-__requirement: python__\
-Set virtual environment in the selected project directory
+:point_right: __requirements: python, openai_api_key, huggingface_api_key__
+#### Set virtual environment in the selected project directory
 ```
 python -m venv .venv
 ```
@@ -23,7 +23,7 @@ You can select other models: `gpt-3.5-turbo` for example.
 ```
 python chat.py --model gpt-3.5-turbo
 ```
-You can select open source models from HuggingFace: `Meta-Llama-3` for example.
+You can select open-source models from Hugging Face, such as `Meta-Llama-3`, but it does not work properly in this app yet.
 ```
 python chat.py --model meta-llama/Meta-Llama-3-8B-Instruct
 ```
@@ -38,3 +38,4 @@ HUGGINGFACE_API_KEY
 LANGCHAIN_API_KEY
 HUGGINGFACE_API_KEY
 ```
+:point_right: More in .app_info

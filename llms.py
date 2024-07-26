@@ -58,7 +58,7 @@ class ChatContext(Llms):
         create_title = [
             (
                 "system",
-                custom_prompts["Generate a filename"],
+                custom_prompts["generate a filename"],
             ),
             ("human", self.get_content()),  # should not be list!
         ]

@@ -7,9 +7,9 @@ https://huggingface.co/
 https://platform.openai.com/api-keys
 
 ## Tried models, looks good
-python chat.py --model <model>
+python chat.py --m '<model>'
 
-'gpt-4o-mini'
+'gpt-4o-mini'  # default
 'gpt-4o'
 'gpt-4'
 'gpt-4-turbo'
@@ -23,9 +23,12 @@ python chat.py --model <model>
 ## Not yet work well
 'meta-llama/Meta-Llama-3-8B-Instruct'
 
-## Mode
-python chat.py --mode 'Short and concise'
-python chat.py --mode 'Correct english'
+## Role
+python chat.py --r '<role>'
+
+'short and concise'  # default
+'correct english'
+'translate to english' #  / german / spanish / french / hungarian
 
 ## Providers
 'openai'
@@ -51,7 +54,7 @@ pip install -r requirements.txt
 
 ## Run
 python chat.py
-python chat.py --model <model>
+python chat.py --m '<model>'
 
 ## Open a conversation file
 cd conversation

@@ -1,5 +1,3 @@
-import os
-import argparse
 import asyncio
 
 from langchain_core.output_parsers import StrOutputParser
@@ -14,6 +12,8 @@ from colorama import init, Fore, Style
 
 from llms import Llms, ChatContext
 from prompts import custom_prompts
+from helpers import parser, create_directories
+
 
 # Initialize colorama
 init()
@@ -21,25 +21,23 @@ init()
 # Load environment variables from .env file
 load_dotenv()
 
-parser = argparse.ArgumentParser(description="Script to process model and provider")
-
-# Add optional 'model' argument
-parser.add_argument("--model", default="gpt-4o-mini", help="The model to use (optional)")
-parser.add_argument("--mode", default="Short and concise", help="The mode to response to the prompt (optional)")
-
 # Parse arguments
 args = parser.parse_args()
-model = args.model
-response_mode = args.mode
+model = args.m
+role = args.r
+
+
+""" Apply the model """
 
 llm = Llms(model)
 model = llm.get_model()
 selected_model = getattr(llm, 'model')
-print(f"{Fore.LIGHTBLUE_EX}{Style.NORMAL}Model: {selected_model}")
-print(f"{Fore.LIGHTBLUE_EX}{Style.NORMAL}Response mode: {response_mode}")
+
+print(f"\n{Fore.LIGHTBLUE_EX}{Style.NORMAL}Model: {selected_model}")
+print(f"{Fore.LIGHTBLUE_EX}{Style.NORMAL}Role: {role}")
 
 system_prompt = f""" You are helpful, creative, clever, and very friendly assistant. 
-{custom_prompts[response_mode]} """  # Change this role to whatever you want
+{custom_prompts[role]} """  # Change this role to whatever you want
 
 prompt = ChatPromptTemplate.from_messages([
     ("system", system_prompt),
@@ -66,8 +64,8 @@ with_message_history = RunnableWithMessageHistory(
 
 # Chat on the command line
 async def chat_loop():
-    
-    print(f"{Style.RESET_ALL}\nI am your assistant. Ask me anything or chat with me.")
+
+    print(f"{Style.RESET_ALL}\nI am your assistant. Give me a prompt according to my role!")
     
     while True:
         
@@ -93,23 +91,23 @@ async def chat_loop():
             
             if save.lower() == 'y':
                 
-                # Make directory if not exists
-                dir = 'conversations'
-                if not os.path.exists(dir):
-                    os.makedirs(dir)
-                
                 # Save the conversation to a text file
-                aigenerated_filename =ChatContext(store['chat'].messages).add_filename()
+                filename =ChatContext(store['chat'].messages).add_filename()
                 
-                with open(f"{dir}/{aigenerated_filename}.txt", 'w', encoding='UTF-8') as f:
+                # Make directories if not exists
+                dir = 'conversations'
+                create_directories(dir, role)
+                
+                with open(f"{dir}/{role}/{filename}.txt", 'w', encoding='UTF-8') as f:
                     f.write(f"Model: {selected_model}\n\n")
                     for message in store['chat'].messages:
                         prefix = "AI" if isinstance(message, AIMessage) else "User"
                         f.write(f"{prefix}: {message.content}\n")
                 
-                print(f"Conversation saved to the file: {aigenerated_filename}.txt")
+                print(f"Conversation saved to the file: {filename}.txt")
             
             break  # Exit the loop if the user enters an empty prompt
 
 # Call the async function to start the chat loop
 asyncio.run(chat_loop())
+

@@ -28,6 +28,7 @@ You can select chat role as well. Default is: `short and concise`
 python chat.py --r "correct english"
 ```
 Other roles: `translate to english` / german / spanish / french / hungarian
+
 ---
 ```
 #.env

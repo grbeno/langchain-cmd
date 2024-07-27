@@ -66,26 +66,23 @@ with_message_history = RunnableWithMessageHistory(
 async def chat_loop():
 
     print(f"{Style.RESET_ALL}\nI am your assistant. Give me a prompt according to my role!")
-    
+
     while True:
         
         if prompt := input(f"\n{Fore.YELLOW}{Style.NORMAL}User: "):
             
-            # Invoke the AI model with the prompt
-            response = with_message_history.invoke(
-                {"input": prompt},
-                config={"configurable": {"session_id": "chat"}},
-            )
-            
             # Print the AI response
             print(f"{Fore.GREEN}{Style.NORMAL}AI: ", end='')
             
-            # Streaming output
-            for char in response:
-                print(char, end='', flush=True)
-                await asyncio.sleep(0.01)  # Adjust this value to control the speed of output
+            # Invoke the AI model with the prompt
+            config = {"configurable": {"session_id": "chat"}}
+            for response in with_message_history.stream(
+                {"input": prompt},
+                config=config,
+            ):
+                print(response, end='', flush=True)
         
-        else:
+        else: 
             # Ask a question to save or not to text file
             save = input("Do you want to save the conversation to a text file? (y/n): ")
             

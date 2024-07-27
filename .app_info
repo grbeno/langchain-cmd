@@ -28,6 +28,7 @@ python chat.py --r '<role>'
 
 'short and concise'  # default
 'correct english'
+'correct german'
 'translate to english' #  / german / spanish / french / hungarian
 
 ## Providers

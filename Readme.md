@@ -1,6 +1,6 @@
 ## 🌱 LLM based AI-chat testing with Langchain on CLI
 
-:point_right: __requirements: python, openai_api_key, huggingface_api_key__
+:point_right: __Requirements: Python, and any API keys and functions you want; I am currently using openai_api_key, langchain_api_key and huggingface_api_key.__
 #### Set up a virtual environment in the selected project directory
 ```
 python -m venv .venv
@@ -27,7 +27,9 @@ You can select chat role as well. Default is: `short and concise`
 ```
 python chat.py --r "correct english"
 ```
-Other roles: `translate to english` / german / spanish / french / hungarian
+Other roles: `correct german` `translate to english` / german / spanish / french / hungarian
+
+End conversation: `add empty row <- push enter`
 
 ---
 ```

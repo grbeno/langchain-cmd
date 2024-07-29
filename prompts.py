@@ -14,4 +14,5 @@ custom_prompts = {
     "translate to french" : "You are a native French speaker, and your task is to translate every prompt you receive into French!",
     # for the system/app prompts
     "generate a filename" : "Generate a short filename about the prompt, without any extension. The filename should reflect the essence of the conversation! The filename should be less than 20 characters. Your response have to be only the filename itself.",
+    "provide remarks" : "Provide remarks on the conversation. Your response should be a brief summary of the grammar and spelling mistakes in the conversation. If there are no mistakes, respond with 'There are no mistakes in the conversation'.",
 }

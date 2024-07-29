@@ -2,8 +2,7 @@ import asyncio
 
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_community.chat_message_histories import ChatMessageHistory
-from langchain_core.chat_history import BaseChatMessageHistory
+from langchain_core.chat_history import BaseChatMessageHistory, InMemoryChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_core.messages import AIMessage
 
@@ -51,7 +50,7 @@ store = {}
 
 def get_session_history(session_id: str) -> BaseChatMessageHistory:
     if session_id not in store:
-        store[session_id] = ChatMessageHistory()
+        store[session_id] = InMemoryChatMessageHistory()
     return store[session_id]
 
 # Create a runnable that keeps track of the message history
@@ -74,7 +73,7 @@ async def chat_loop():
             # Print the AI response
             print(f"{Fore.GREEN}{Style.NORMAL}AI: ", end='')
             
-            # Invoke the AI model with the prompt
+            # Stream the AI model response after prompting
             config = {"configurable": {"session_id": "chat"}}
             for response in with_message_history.stream(
                 {"input": prompt},
@@ -89,7 +88,7 @@ async def chat_loop():
             if save.lower() == 'y':
                 
                 # Save the conversation to a text file
-                filename =ChatContext(store['chat'].messages).add_filename()
+                filename = ChatContext(store['chat'].messages, "generate a filename").generate()
                 
                 # Make directories if not exists
                 dir = 'conversations'
@@ -100,11 +99,17 @@ async def chat_loop():
                     for message in store['chat'].messages:
                         prefix = "AI" if isinstance(message, AIMessage) else "User"
                         f.write(f"{prefix}: {message.content}\n")
+                    if 'correct' in role:
+                        remarks = ChatContext(store['chat'].messages, 'provide remarks').generate()
+                    print(f"\nRemarks:\n{remarks}")
+                    f.write(f"\nRemarks:\n{remarks}")
                 
                 print(f"Conversation saved to the file: {filename}.txt")
             
             break  # Exit the loop if the user enters an empty prompt
 
-# Call the async function to start the chat loop
-asyncio.run(chat_loop())
+
+if __name__ == '__main__':
+    # Call the async function to start the chat loop
+    asyncio.run(chat_loop())
 

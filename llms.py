@@ -3,7 +3,7 @@ import json
 
 from langchain_openai import ChatOpenAI
 from langchain_huggingface import HuggingFaceEndpoint
-from langchain_core.messages import AIMessage
+from langchain_core.messages import AIMessage, HumanMessage
 
 from prompts import custom_prompts
 
@@ -43,22 +43,25 @@ class Llms():
 
 class ChatContext(Llms):
 
-    def __init__(self, conversation: dict) -> None:
+    def __init__(self, conversation: dict, prompt_keyword: str) -> None:
         super().__init__('gpt-4o-mini')
         self.conversation = conversation
+        self.prompt_keyword = prompt_keyword
 
     def get_content(self) -> json:
         res = []
         for message in self.conversation:
-            prefix = "AI" if isinstance(message, AIMessage) else "User"
-            res.append(f"{prefix}: {message.content}")
+            if self.prompt_keyword == "provide remarks" and isinstance(message, HumanMessage):
+                res.append(message.content)
+            else:
+                res.append(f"{'AI' if isinstance(message, AIMessage) else 'User'}: {message.content}")
         return json.dumps(res)
     
-    def add_filename(self) -> str:    
+    def generate(self) -> str:    
         create_title = [
             (
                 "system",
-                custom_prompts["generate a filename"],
+                custom_prompts[self.prompt_keyword],
             ),
             ("human", self.get_content()),  # should not be list!
         ]

@@ -4,6 +4,7 @@ import json
 from langchain_openai import ChatOpenAI
 from langchain_huggingface import HuggingFaceEndpoint
 from langchain_core.messages import AIMessage, HumanMessage
+from langchain_ollama.llms import OllamaLLM
 
 from prompts import custom_prompts
 
@@ -32,13 +33,18 @@ class Llms():
             do_sample=False,
             huggingfacehub_api_token=os.environ.get("HUGGINGFACE_API_KEY"),
         )
+    
+    def ollama(self) -> callable:
+        """Selects the model from OpenAI."""
+        return OllamaLLM(model=self.model)
         
     def get_model(self):
         """Selects the model."""
         if 'gpt' in self.model:
             return self.openai()
         else:
-            return self.hugging_face()
+            #return self.hugging_face()
+            return self.ollama()
 
 
 class ChatContext(Llms):

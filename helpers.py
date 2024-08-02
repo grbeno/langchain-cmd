@@ -20,7 +20,7 @@ parser.add_argument(
         'gpt-4',
         'gpt-4-turbo',
         'gpt-3.5-turbo',
-        'meta-llama/Meta-Llama-3-8B-Instruct',
+        'llama3.1',  # ollama
     ],
     help="The model to use (optional)"
 )

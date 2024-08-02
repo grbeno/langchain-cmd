@@ -75,11 +75,25 @@ async def chat_loop():
             
             # Stream the AI model response after prompting
             config = {"configurable": {"session_id": "chat"}}
-            for response in with_message_history.stream(
+            
+            # for response in with_message_history.stream(
+            #     {"input": prompt},
+            #     config=config,
+            # ):
+            #     print(response, end='', flush=True)
+            ##Error in RootListenersTracer.on_chain_end callback: ValueError()
+            ##Error in callback coroutine: ValueError()
+
+            response = with_message_history.invoke(
                 {"input": prompt},
                 config=config,
-            ):
-                print(response, end='', flush=True)
+            )
+            
+            for char in response:
+                print(char, end='', flush=True)
+                await asyncio.sleep(0.01)  # Adjust this value to control the speed of output
+
+            # print(response)  # invoke
         
         else: 
             # Ask a question to save or not to text file
@@ -101,8 +115,8 @@ async def chat_loop():
                         f.write(f"{prefix}: {message.content}\n")
                     if 'correct' in role:
                         remarks = ChatContext(store['chat'].messages, 'provide remarks').generate()
-                    print(f"\nRemarks:\n{remarks}")
-                    f.write(f"\nRemarks:\n{remarks}")
+                        print(f"\nRemarks:\n{remarks}")
+                        f.write(f"\nRemarks:\n{remarks}")
                 
                 print(f"Conversation saved to the file: {filename}.txt")
             

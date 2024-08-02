@@ -1,6 +1,17 @@
 ## 🌱 LLM based AI-chat testing with Langchain on CLI
 
 :point_right: __Requirements: Python, and any API keys and functions you want; I am currently using openai_api_key, langchain_api_key and huggingface_api_key.__
+#### Ollama
+Download and install from Ollama's website to use it locally.
+
+_pull a model_
+```
+ollama pull <model_name>
+```
+_test a model_
+```
+ollama run <model_name>
+```
 #### Set up a virtual environment in the selected project directory
 ```
 python -m venv .venv
@@ -19,9 +30,9 @@ Default model `gpt-4o-mini` from OpenAI.
 ```
 python chat.py
 ```
-You can select other models: `gpt-4` for example.
+You can select other models: `llama3.1` from Ollama.
 ```
-python chat.py --m gpt-4
+python chat.py --m llama3.1
 ```
 You can select chat role as well. Default is: `short and concise`
 ```

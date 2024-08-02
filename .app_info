@@ -5,6 +5,7 @@ https://python.langchain.com/v0.2/docs/introduction/
 https://smith.langchain.com/
 https://huggingface.co/
 https://platform.openai.com/api-keys
+https://python.langchain.com/v0.2/docs/integrations/llms/ollama/
 
 ## Tried models, looks good
 python chat.py --m '<model>'
@@ -14,6 +15,7 @@ python chat.py --m '<model>'
 'gpt-4'
 'gpt-4-turbo'
 'gpt-3.5-turbo'
+'llama3.1'  # ollama
 
 ## Planned models
 'claude-3-5-sonnet-20240620'
@@ -34,6 +36,7 @@ python chat.py --r '<role>'
 ## Providers
 'openai'
 'huggingface'
+'ollama'
 
 ## .env
 

@@ -20,7 +20,7 @@ class Llms():
         return ChatOpenAI(
             api_key=os.environ.get("OPENAI_API_KEY"),
             model=self.model,
-            max_tokens=200,
+            max_tokens=256,
             temperature=0.7,
         )
         

@@ -6,7 +6,7 @@ __pycache__/
 # test-cmd
 .dev_info
 conversations/
-tester.py
+playground.py
 docs/
 
 # testing

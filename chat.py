@@ -96,8 +96,15 @@ async def chat_loop():
             # print(response)  # invoke
         
         else: 
+            # Generate remarks if the role is 'correct ...'
+            if 'correct' in role:
+                remarks = ChatContext(store['chat'].messages, 'provide remarks').generate()
+                print(f"\nRemarks:\n{remarks}")
+            else:
+                remarks = None
+            
             # Ask a question to save or not to text file
-            save = input("Do you want to save the conversation to a text file? (y/n): ")
+            save = input("Do you want to save the conversation to a text file? (y/n): ")         
             
             if save.lower() == 'y':
                 
@@ -113,9 +120,7 @@ async def chat_loop():
                     for message in store['chat'].messages:
                         prefix = "AI" if isinstance(message, AIMessage) else "User"
                         f.write(f"{prefix}: {message.content}\n")
-                    if 'correct' in role:
-                        remarks = ChatContext(store['chat'].messages, 'provide remarks').generate()
-                        print(f"\nRemarks:\n{remarks}")
+                    if remarks:
                         f.write(f"\nRemarks:\n{remarks}")
                 
                 print(f"Conversation saved to the file: {filename}.txt")

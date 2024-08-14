@@ -22,7 +22,7 @@ python -m venv .venv
 ```
 ##### On Linux or Mac
 ```
-source venv/bin/activate  # linux or mac
+source venv/bin/activate
 ```
 #### Install dependecies
 ```

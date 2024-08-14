@@ -24,7 +24,7 @@ python -m venv .venv
 ```
 source venv/bin/activate
 ```
-#### Install dependecies
+#### Install dependencies
 ```
 pip install -r requirements.txt
 ```

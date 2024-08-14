@@ -75,25 +75,8 @@ async def chat_loop():
             
             # Stream the AI model response after prompting
             config = {"configurable": {"session_id": "chat"}}
-            
-            # for response in with_message_history.stream(
-            #     {"input": prompt},
-            #     config=config,
-            # ):
-            #     print(response, end='', flush=True)
-            ##Error in RootListenersTracer.on_chain_end callback: ValueError()
-            ##Error in callback coroutine: ValueError()
-
-            response = with_message_history.invoke(
-                {"input": prompt},
-                config=config,
-            )
-            
-            for char in response:
-                print(char, end='', flush=True)
-                await asyncio.sleep(0.01)  # Adjust this value to control the speed of output
-
-            # print(response)  # invoke
+            for response in with_message_history.stream({"input": prompt}, config=config):
+                print(response, end='', flush=True)
         
         else: 
             # Generate remarks if the role is 'correct ...'

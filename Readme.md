@@ -16,12 +16,15 @@ ollama run <model_name>
 ```
 python -m venv .venv
 ```
+##### On Windows
 ```
-.venv/Scripts/activate  # windows
+.venv/Scripts/activate
 ```
+##### On Linux or Mac
 ```
 source venv/bin/activate  # linux or mac
-``` 
+```
+#### Install dependecies
 ```
 pip install -r requirements.txt
 ```

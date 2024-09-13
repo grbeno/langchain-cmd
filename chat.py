@@ -80,11 +80,16 @@ async def chat_loop():
         
         else: 
             # Generate remarks if the role is 'correct ...'
-            if 'correct' in role:
-                remarks = ChatContext(store['chat'].messages, 'provide remarks').generate()
-                print(f"\nRemarks:\n{remarks}")
+            try:
+                conversation = store['chat'].messages
+            except KeyError:  # This error occurs if the user provides an empty row as the first prompt.
+                break
             else:
-                remarks = None
+                if 'correct' in role:
+                    remarks = ChatContext(conversation, 'provide remarks').generate()
+                    print(f"\nRemarks:\n{remarks}")
+                else:
+                    remarks = None
             
             # Ask a question to save or not to text file
             save = input("Do you want to save the conversation to a text file? (y/n): ")         
@@ -92,7 +97,7 @@ async def chat_loop():
             if save.lower() == 'y':
                 
                 # Save the conversation to a text file
-                filename = ChatContext(store['chat'].messages, "generate a filename").generate()
+                filename = ChatContext(conversation, "generate a filename").generate()
                 
                 # Make directories if not exists
                 dir = 'conversations'
@@ -100,7 +105,7 @@ async def chat_loop():
                 
                 with open(f"{dir}/{role}/{filename}.txt", 'w', encoding='UTF-8') as f:
                     f.write(f"Model: {selected_model}\n\n")
-                    for message in store['chat'].messages:
+                    for message in conversation:
                         prefix = "AI" if isinstance(message, AIMessage) else "User"
                         f.write(f"{prefix}: {message.content}\n")
                     if remarks:

@@ -55,5 +55,6 @@ HUGGINGFACE_API_KEY
 # langchain/langsmith
 
 LANGCHAIN_API_KEY
+LANGCHAIN_TRACING
 ```
 :point_right: More in .app_info

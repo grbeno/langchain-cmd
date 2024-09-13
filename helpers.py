@@ -16,6 +16,7 @@ parser.add_argument(
     default="gpt-4o-mini",
     choices=[
         'gpt-4o-mini',
+        'gpt-4o-2024-08-06',
         'gpt-4o',
         'gpt-4',
         'gpt-4-turbo',

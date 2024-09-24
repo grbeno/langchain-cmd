@@ -117,6 +117,10 @@ async def chat_loop():
 
 
 if __name__ == '__main__':
-    # Call the async function to start the chat loop
-    asyncio.run(chat_loop())
+    try:
+        # Call the async function to start the chat loop
+        asyncio.run(chat_loop())
+    except EOFError or KeyboardInterrupt:  # ctrl + c
+        print("\n\nGoodbye!")
+    
 

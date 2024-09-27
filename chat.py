@@ -35,8 +35,7 @@ selected_model = getattr(llm, 'model')
 print(f"\n{Fore.LIGHTBLUE_EX}{Style.NORMAL}Model: {selected_model}")
 print(f"{Fore.LIGHTBLUE_EX}{Style.NORMAL}Role: {role}")
 
-system_prompt = f""" You are helpful, creative, clever, and very friendly assistant. 
-{custom_prompts[role]} """  # Change this role to whatever you want
+system_prompt = f""" You are helpful, creative, clever, and very friendly assistant. {custom_prompts[role]} """  # Change this role to whatever you want
 
 prompt = ChatPromptTemplate.from_messages([
     ("system", system_prompt),
